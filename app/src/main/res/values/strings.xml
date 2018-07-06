@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Random Facts</string>
+
+    <string name="title_network_unavailable">No Internet Connection</string>
+    <string name="network_un_available">Awaiting network connection. Please move to an area where network is available.</string>
+    <string name="ok">OK</string>
+    <string name="title_server_unavailable">Server unavailable</string>
+    <string name="msg_server_unavailable">We are facing some issue to establish connection with the server. Please try again later.</string>
+
+</resources>
