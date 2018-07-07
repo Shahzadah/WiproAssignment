@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/horizontal_line_height"
-    android:background="@drawable/feed_background"
+    android:background="@drawable/fact_list_item_bg"
     android:paddingBottom="@dimen/padding_14dp"
     android:paddingLeft="@dimen/padding_10dp"
     android:paddingRight="@dimen/padding_10dp"
