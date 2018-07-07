@@ -48,12 +48,7 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
     @Override
     public void setLoadingIndicator(final boolean active) {
         // Making sure that setRefreshing() is called after the layout is done with everything else.
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(active);
-            }
-        });
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(active));
     }
 
     @Override
@@ -64,12 +59,7 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
     @Override
     public void notifyAdapter() {
         // Making sure that notifyDataSetChanged() is called after the layout is done with everything else.
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+        recyclerView.post(() -> mAdapter.notifyDataSetChanged());
     }
 
     @Override

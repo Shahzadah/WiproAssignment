@@ -68,13 +68,7 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListItemViewHold
         }
         FactDetails factDetails = mListFactDetails.get(position);
         holder.setValues(factDetails);
-        holder.setClickListener(new FactsListItemViewHolder.IRecyclerViewListClickListener() {
-
-            @Override
-            public void onClick(View v, int position) {
-                mListener.onListItemClick(position);
-            }
-        });
+        holder.setClickListener((v, itemPosition) -> mListener.onListItemClick(itemPosition));
     }
 
     @Override

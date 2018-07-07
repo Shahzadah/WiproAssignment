@@ -13,6 +13,7 @@ import com.wipro.wipro.framework.base.MVPView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FactsListPresenter implements FactsListContract.Presenter {
 
@@ -84,8 +85,11 @@ public class FactsListPresenter implements FactsListContract.Presenter {
             public void onRequestSuccess(FactList model) {
                 if (model != null) {
                     mListFactDetails.clear();
-                    mListFactDetails.addAll(model.getListFacts());
 
+                    //Filter list as - title and (either description or image) should be available
+                    mListFactDetails.addAll(model.getListFacts().parallelStream()
+                            .filter(value -> value.getTitle() != null && (value.getDescription() != null || value.getImageUrl() != null))
+                            .collect(Collectors.toList()));
                 }
                 if (mFactsView != null) {
                     mFactsView.setLoadingIndicator(false);
