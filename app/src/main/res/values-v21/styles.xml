@@ -20,6 +20,20 @@
         <item name="typeface">Roboto-Bold.ttf</item>
     </style>
 
+    <style name="Title" parent="TextFontRobotoBold">
+        <item name="android:textColor">@color/item_title</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Description" parent="TextFontRobotoRegular">
+        <item name="android:textColor">@color/item_description</item>
+        <item name="android:textSize">@dimen/text_size_details</item>
+        <item name="android:maxLines">4</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
     <style name="HeaderTextAlert" parent="TextFontRobotoBold">
         <item name="android:textSize">@dimen/text_size_alert_heading</item>
         <item name="android:textColor">@android:color/black</item>

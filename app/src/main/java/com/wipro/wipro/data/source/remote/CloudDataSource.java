@@ -2,11 +2,14 @@ package com.wipro.wipro.data.source.remote;
 
 import android.util.LruCache;
 
+import com.wipro.wipro.Utils.ResponseHandler;
 import com.wipro.wipro.application.App;
+import com.wipro.wipro.data.FactList;
 import com.wipro.wipro.data.source.FactDataSource;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class CloudDataSource implements FactDataSource {
@@ -20,21 +23,54 @@ public class CloudDataSource implements FactDataSource {
     }
 
     public static CloudDataSource create() {
-        if(mCloudDataSource == null) {
-            mCloudDataSource =  new CloudDataSource(App.getInstance().getApiEndpointInterface());
+        if (mCloudDataSource == null) {
+            mCloudDataSource = new CloudDataSource(App.getInstance().getApiEndpointInterface());
         }
         return mCloudDataSource;
     }
 
-    private Observable<?> getPreparedObservable(Observable<?> unPreparedObservable, Class<?> clazz) {
-        Observable<?> preparedObservable = apiObservables.get(clazz);
+    @SuppressWarnings({"unchecked", "unused"})
+    @Override
+    public void getRandomFacts(boolean cacheObservable, boolean useCache, final ResponseHandler<FactList> responseHandler) {
+        /*Observable<FactList> factListObservable = mServiceEndpoint.getRandomFacts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());*/
+        Observable<FactList> factListObservable = ((Observable<FactList>) getPreparedObservable(mServiceEndpoint.getRandomFacts(), FactList.class, cacheObservable, useCache));
+        factListObservable.subscribeWith(new DisposableObserver<FactList>() {
+            @Override
+            public void onNext(FactList factList) {
+                responseHandler.onRequestSuccess(factList);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                responseHandler.onRequestFailure(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+
+    private Observable<?> getPreparedObservable(Observable<?> unPreparedObservable, Class<?> clazz, boolean cacheObservable, boolean useCache) {
+        Observable<?> preparedObservable = null;
+
+        if (useCache) {
+            preparedObservable = apiObservables.get(clazz);
+        }
+
+        //If cache doesn't exist. Then, create observable to call API
         if (preparedObservable == null) {
-            //we are here because we have never created this observable before or we didn't want to use the cache...
             preparedObservable = unPreparedObservable
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread());
-            preparedObservable = preparedObservable.cache();
-            apiObservables.put(clazz, preparedObservable);
+            if (cacheObservable) {
+                preparedObservable = preparedObservable.cache();
+                apiObservables.put(clazz, preparedObservable);
+            }
         }
         return preparedObservable;
     }

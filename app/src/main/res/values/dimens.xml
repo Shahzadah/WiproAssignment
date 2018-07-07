@@ -8,5 +8,11 @@
     <dimen name="text_size_alert_heading">20sp</dimen>
     <dimen name="text_size_alert_desc">14sp</dimen>
     <dimen name="text_size_alert_button">16sp</dimen>
+    <dimen name="text_size_title">18sp</dimen>
+    <dimen name="text_size_details">16sp</dimen>
+
+    <dimen name="horizontal_line_height">1dp</dimen>
+    <dimen name="fact_item_image_width">115dp</dimen>
+    <dimen name="fact_item_image_height">90dp</dimen>
 
 </resources>

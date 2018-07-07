@@ -1,6 +1,9 @@
 package com.wipro.wipro.splash;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+
+import com.wipro.wipro.getfacts.FactsListActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +23,9 @@ public class SplashActivity extends AppCompatActivity {
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //Launch activity after splash and finish
+                Intent intent = new Intent(SplashActivity.this, FactsListActivity.class);
+                startActivity(intent);
+                finish();
             }
         }, SPLASH_DISPLAY_TIME);
     }

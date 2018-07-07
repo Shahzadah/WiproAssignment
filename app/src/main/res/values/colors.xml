@@ -11,5 +11,9 @@
     <color name="grey_one">#666666</color>
     <color name="grey_two">#cccccc</color>
     <color name="grey_three">#e5e5e5</color>
+    <color name="white_list_color">#FAFAFA</color>
+
+    <color name="item_title">#0080ff</color>
+    <color name="item_description">#4C4C4C</color>
 
 </resources>
