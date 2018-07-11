@@ -35,7 +35,7 @@ public class FactsListItemViewHolder extends RecyclerView.ViewHolder implements 
     @BindDrawable(R.drawable.ic_no_image)
     Drawable mNoImageDrawable;
 
-    private Context mContext;
+    private final Context mContext;
     private IRecyclerViewListClickListener clickListener;
 
     FactsListItemViewHolder(Context context, View itemView) {

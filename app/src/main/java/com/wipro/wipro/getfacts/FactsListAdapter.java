@@ -15,7 +15,7 @@ import java.util.List;
 public class FactsListAdapter extends RecyclerView.Adapter<FactsListItemViewHolder> {
 
 
-    private Context mContext;
+    private final Context mContext;
     private List<FactDetails> mListFactDetails;
     private FactsListContract.Presenter mListener;
 

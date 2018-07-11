@@ -20,11 +20,7 @@ public class NetworkUtil {
         ConnectivityManager cm = (ConnectivityManager) App.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null && cm.getActiveNetworkInfo() != null) {
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
-                return true;
-
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
-                return true;
+            return activeNetwork != null && activeNetwork.isConnected();
         }
         return false;
     }

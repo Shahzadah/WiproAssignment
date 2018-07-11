@@ -14,29 +14,28 @@ import com.wipro.wipro.R;
  */
 class DialogHelper {
 
-    private Context mContext;
+    private final Context mContext;
     private View mDialogView;
 
-    private String mHeaderMessage;
-    private String mErrorMessage;
-    private String mButtonText;
-    private View.OnClickListener mButtonClickListener;
+    private final String mHeaderMessage;
+    private final String mErrorMessage;
+    private final String mButtonText;
+    private final View.OnClickListener mClickListener;
 
-    //Constructor for 1 button
     DialogHelper(Context context, String header, String message, String button1, View.OnClickListener button1ClickListener) {
         mContext = context;
         mHeaderMessage = header;
         mErrorMessage = message;
         mButtonText = button1;
-        mButtonClickListener = button1ClickListener;
+        mClickListener = button1ClickListener;
 
-        initializeViewForOneButton();
+        init();
     }
 
     /**
      * This method stands for initializing single button
      */
-    private void initializeViewForOneButton() {
+    private void init() {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         mDialogView = inflater.inflate(R.layout.custom_error_dialog, null);
 
@@ -60,7 +59,7 @@ class DialogHelper {
         }
         button1.setTypeface(null, Typeface.BOLD);
         button1.setText(mButtonText);
-        button1.setOnClickListener(mButtonClickListener);
+        button1.setOnClickListener(mClickListener);
     }
 
     /**

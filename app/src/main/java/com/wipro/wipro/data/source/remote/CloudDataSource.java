@@ -14,8 +14,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CloudDataSource implements FactDataSource {
 
-    private ServiceInterface mServiceEndpoint;
-    private LruCache<Class<?>, Observable<?>> apiObservables = new LruCache<>(10);
+    private final ServiceInterface mServiceEndpoint;
+    private final LruCache<Class<?>, Observable<?>> apiObservables = new LruCache<>(10);
     private static CloudDataSource mCloudDataSource;
 
     private CloudDataSource(ServiceInterface service) {
@@ -32,11 +32,8 @@ public class CloudDataSource implements FactDataSource {
     @SuppressWarnings({"unchecked", "unused"})
     @Override
     public void getRandomFacts(boolean cacheObservable, boolean useCache, final ResponseHandler<FactList> responseHandler) {
-        /*Observable<FactList> factListObservable = mServiceEndpoint.getRandomFacts()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());*/
         Observable<FactList> factListObservable = ((Observable<FactList>) getPreparedObservable(mServiceEndpoint.getRandomFacts(), FactList.class, cacheObservable, useCache));
-        factListObservable.subscribeWith(new DisposableObserver<FactList>() {
+        DisposableObserver observer = factListObservable.subscribeWith(new DisposableObserver<FactList>() {
             @Override
             public void onNext(FactList factList) {
                 responseHandler.onRequestSuccess(factList);

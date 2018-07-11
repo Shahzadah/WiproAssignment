@@ -22,8 +22,8 @@ public class CustomTextView extends AppCompatTextView {
 
 	public CustomTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.CustomFontTypeface);
-		String fontName = styledAttrs.getString(R.styleable.CustomFontTypeface_typeface);
+		TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView);
+		String fontName = styledAttrs.getString(R.styleable.CustomTextView_typeface);
 		styledAttrs.recycle();
 		if (fontName != null) {
 			this.setTypeface(GetTypeFace(context.getAssets(), fontName), typeface.getStyle());
