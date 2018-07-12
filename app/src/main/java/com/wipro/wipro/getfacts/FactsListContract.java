@@ -28,6 +28,13 @@ class FactsListContract {
          * Notify recycler view adapter when underlying data changes.
          */
         void notifyAdapter();
+
+        /**
+         * Set toolbar title
+         *
+         * @param title :   Title text to be shown
+         */
+        void setTitle(String title);
     }
 
     interface Presenter extends BasePresenter {

@@ -63,7 +63,7 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListItemViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final FactsListItemViewHolder holder, int position) {
-        if (mListFactDetails == null || mListFactDetails.size() <= position) {
+        if (mListFactDetails == null || mListFactDetails.size() <= position || mListFactDetails.get(position) == null) {
             return;
         }
         FactDetails factDetails = mListFactDetails.get(position);

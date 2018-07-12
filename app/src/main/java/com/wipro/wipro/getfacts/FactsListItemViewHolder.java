@@ -51,10 +51,13 @@ public class FactsListItemViewHolder extends RecyclerView.ViewHolder implements 
         ivFactRep.setImageDrawable(mNoImageDrawable);
         pbImageLoad.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(factDetails.getImageUrl())) {
-            Picasso picasso = Picasso.with(mContext);
-            picasso.setIndicatorsEnabled(true);
-            picasso.load(factDetails.getImageUrl())
-                    .placeholder(R.drawable.ic_no_image)
+            Picasso.with(mContext)
+                    .load(factDetails.getImageUrl())
+                    .fit()
+                    .centerCrop()
+                    .noFade()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
                     .into(ivFactRep, new Callback() {
                         @Override
                         public void onSuccess() {

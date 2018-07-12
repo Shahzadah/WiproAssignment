@@ -2,6 +2,7 @@ package com.wipro.wipro.data.source.remote;
 
 import android.util.LruCache;
 
+import com.wipro.wipro.Utils.NetworkUtil;
 import com.wipro.wipro.Utils.ResponseHandler;
 import com.wipro.wipro.application.App;
 import com.wipro.wipro.data.FactList;
@@ -32,6 +33,10 @@ public class CloudDataSource implements FactDataSource {
     @SuppressWarnings({"unchecked", "unused"})
     @Override
     public void getRandomFacts(boolean cacheObservable, boolean useCache, final ResponseHandler<FactList> responseHandler) {
+        if (!isCacheExist(FactList.class) && !NetworkUtil.isNetworkConnected()) {
+            responseHandler.onInternetNotAvailable();
+            return;
+        }
         Observable<FactList> factListObservable = ((Observable<FactList>) getPreparedObservable(mServiceEndpoint.getRandomFacts(), FactList.class, cacheObservable, useCache));
         DisposableObserver observer = factListObservable.subscribeWith(new DisposableObserver<FactList>() {
             @Override
@@ -70,5 +75,9 @@ public class CloudDataSource implements FactDataSource {
             }
         }
         return preparedObservable;
+    }
+
+    private boolean isCacheExist(Class<?> clazz) {
+        return apiObservables.get(clazz) != null;
     }
 }

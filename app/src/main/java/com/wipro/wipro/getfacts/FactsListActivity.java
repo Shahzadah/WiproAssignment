@@ -31,6 +31,7 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facts_list);
         ButterKnife.bind(this);
+        setTitle(null);
         mPresenter = new FactsListPresenter();
         mPresenter.onAttach((MVPView) this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -60,6 +61,13 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
     public void notifyAdapter() {
         // Making sure that notifyDataSetChanged() is called after the layout is done with everything else.
         recyclerView.post(() -> mAdapter.notifyDataSetChanged());
+    }
+
+    @Override
+    public void setTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     @Override

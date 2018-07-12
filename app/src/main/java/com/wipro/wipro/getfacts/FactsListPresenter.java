@@ -3,7 +3,6 @@ package com.wipro.wipro.getfacts;
 import android.support.annotation.NonNull;
 
 import com.wipro.wipro.R;
-import com.wipro.wipro.Utils.NetworkUtil;
 import com.wipro.wipro.Utils.ResponseHandler;
 import com.wipro.wipro.data.FactDetails;
 import com.wipro.wipro.data.FactList;
@@ -50,17 +49,13 @@ public class FactsListPresenter implements FactsListContract.Presenter {
 
     @Override
     public void loadRandomFacts() {
-        if (validateNetworkAvailability()) {
-            mFactsView.setLoadingIndicator(true);
-            callFactsRetrievalAPI(true);
-        }
+        mFactsView.setLoadingIndicator(true);
+        callFactsRetrievalAPI(true);
     }
 
     @Override
     public void onRefresh() {
-        if (validateNetworkAvailability()) {
-            callFactsRetrievalAPI(false);
-        }
+        callFactsRetrievalAPI(false);
     }
 
     @Override
@@ -73,6 +68,13 @@ public class FactsListPresenter implements FactsListContract.Presenter {
      */
     private void callFactsRetrievalAPI(boolean useCache) {
         mDataSource.getRandomFacts(true, useCache, new ResponseHandler<FactList>() {
+            
+            @Override
+            public void onInternetNotAvailable() {
+                mFactsView.setLoadingIndicator(false);
+                mFactsView.onError(R.string.title_network_unavailable, R.string.network_un_available);
+            }
+
             @Override
             public void onRequestFailure(String errorMessage) {
                 if (mFactsView != null) {
@@ -83,7 +85,9 @@ public class FactsListPresenter implements FactsListContract.Presenter {
 
             @Override
             public void onRequestSuccess(FactList model) {
+                String title = null;
                 if (model != null) {
+                    title = model.getTitle();
                     mListFactDetails.clear();
 
                     //Filter list as - title and (either description or image) should be available
@@ -92,22 +96,11 @@ public class FactsListPresenter implements FactsListContract.Presenter {
                             .collect(Collectors.toList()));
                 }
                 if (mFactsView != null) {
+                    mFactsView.setTitle(title);
                     mFactsView.setLoadingIndicator(false);
                     mFactsView.notifyAdapter();
                 }
             }
         });
-    }
-
-    /**
-     * Send network unavailable error to activity and dismissIndicator progress indicator.
-     */
-    private boolean validateNetworkAvailability() {
-        if (NetworkUtil.isNetworkConnected()) {
-            return true;
-        }
-        mFactsView.setLoadingIndicator(false);
-        mFactsView.onError(R.string.title_network_unavailable, R.string.network_un_available);
-        return false;
     }
 }
