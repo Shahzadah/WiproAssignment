@@ -1,5 +1,6 @@
 package com.wipro.wipro.getfacts;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
 
     private FactsListContract.Presenter mPresenter;
     private FactsListAdapter mAdapter;
+    private AlertDialog mDialog;
 
     @BindView(R.id.SwipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -72,7 +74,7 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
 
     @Override
     public void onError(int errorTitleResId, int errorMsgResId) {
-        AlertManager.showError(this, getString(errorTitleResId), getString(errorMsgResId));
+        mDialog = AlertManager.showError(this, getString(errorTitleResId), getString(errorMsgResId));
     }
 
     @Override
@@ -84,5 +86,8 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
     }
 }

@@ -68,19 +68,11 @@ public class FactsListPresenterTest {
     }
 
     @Test
-    public void loadRandomFactsWhenNetworkNotAvailable() {
-        when(NetworkUtil.isNetworkConnected()).thenReturn(false);
-        mPresenter.loadRandomFacts();
-        verify(view).setLoadingIndicator(false);
-        verify(view).onError(R.string.title_network_unavailable, R.string.network_un_available);
-    }
-
-    @Test
     public void loadRandomFactsWhenNetworkAvailable() {
         when(NetworkUtil.isNetworkConnected()).thenReturn(true);
         mPresenter.loadRandomFacts();
         verify(view).setLoadingIndicator(true);
-        verify(mCloudDataSource).getRandomFacts(eq(true), eq(true), mFactsDataSourceCaptor.capture());
+        verify(mCloudDataSource).getRandomFacts(eq(true), mFactsDataSourceCaptor.capture());
     }
 
     @Test
@@ -88,7 +80,7 @@ public class FactsListPresenterTest {
         when(NetworkUtil.isNetworkConnected()).thenReturn(true);
         mPresenter.loadRandomFacts();
         verify(view).setLoadingIndicator(true);
-        verify(mCloudDataSource).getRandomFacts(eq(true), eq(true), mFactsDataSourceCaptor.capture());
+        verify(mCloudDataSource).getRandomFacts(eq(true), mFactsDataSourceCaptor.capture());
 
         mFactsDataSourceCaptor.getValue().onRequestFailure("Server unavailable");
         verify(view).setLoadingIndicator(false);
@@ -100,7 +92,7 @@ public class FactsListPresenterTest {
         when(NetworkUtil.isNetworkConnected()).thenReturn(true);
         mPresenter.loadRandomFacts();
         verify(view).setLoadingIndicator(true);
-        verify(mCloudDataSource).getRandomFacts(eq(true), eq(true), mFactsDataSourceCaptor.capture());
+        verify(mCloudDataSource).getRandomFacts(eq(true), mFactsDataSourceCaptor.capture());
 
         List<FactDetails> factDetailsList = new ArrayList<>();
         FactDetails factDetails = mock(FactDetails.class);

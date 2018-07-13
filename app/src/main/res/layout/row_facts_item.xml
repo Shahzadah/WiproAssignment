@@ -4,10 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/horizontal_line_height"
     android:background="@drawable/fact_list_item_bg"
-    android:paddingBottom="@dimen/padding_14dp"
-    android:paddingLeft="@dimen/padding_10dp"
-    android:paddingRight="@dimen/padding_10dp"
-    android:paddingTop="@dimen/padding_14dp">
+    android:padding="@dimen/padding_10dp">
 
     <com.wipro.wipro.widgets.CustomTextView
         android:id="@+id/textview_title"
@@ -28,16 +25,16 @@
 
     <FrameLayout
         android:id="@+id/flImage"
-        android:layout_width="@dimen/fact_item_image_width"
-        android:layout_height="@dimen/fact_item_image_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/textview_title"
         android:layout_marginEnd="@dimen/padding_10dp">
 
         <ImageView
             android:id="@+id/image_fact"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/fact_item_image_width"
+            android:layout_height="@dimen/fact_item_image_height"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_no_image" />
 

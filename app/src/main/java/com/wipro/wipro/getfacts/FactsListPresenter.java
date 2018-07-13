@@ -67,8 +67,8 @@ public class FactsListPresenter implements FactsListContract.Presenter {
      * Call API to get list of random facts.
      */
     private void callFactsRetrievalAPI(boolean useCache) {
-        mDataSource.getRandomFacts(true, useCache, new ResponseHandler<FactList>() {
-            
+        mDataSource.getRandomFacts(useCache, new ResponseHandler<FactList>() {
+
             @Override
             public void onInternetNotAvailable() {
                 mFactsView.setLoadingIndicator(false);

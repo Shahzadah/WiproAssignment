@@ -1,5 +1,6 @@
 package com.wipro.wipro.Utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
@@ -18,8 +19,8 @@ public class AlertManager {
      * @param header      : Header text
      * @param description : Description text
      */
-    public static void showError(final Context context, String header, String description) {
-        showError(context, header, description, null);
+    public static AlertDialog showError(final Context context, String header, String description) {
+        return showError(context, header, description, null);
     }
 
     /**
@@ -30,7 +31,7 @@ public class AlertManager {
      * @param description    : Description text
      * @param clickListener: OK button click listener
      */
-    public static void showError(final Context context, String header, String description, final View.OnClickListener clickListener) {
+    public static AlertDialog showError(final Context context, String header, String description, final View.OnClickListener clickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
         final AlertDialog alert = builder.create();
@@ -41,6 +42,9 @@ public class AlertManager {
             }
         });
         alert.setView(viewHelper.getDialogView(), 0, 0, 0, 0);
-        alert.show();
+        if ((context instanceof Activity) && !((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
+            alert.show();
+        }
+        return alert;
     }
 }

@@ -2,6 +2,7 @@ package com.wipro.wipro.getfacts;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,8 +10,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.wipro.wipro.R;
 import com.wipro.wipro.data.FactDetails;
 
@@ -51,24 +57,28 @@ public class FactsListItemViewHolder extends RecyclerView.ViewHolder implements 
         ivFactRep.setImageDrawable(mNoImageDrawable);
         pbImageLoad.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(factDetails.getImageUrl())) {
-            Picasso.with(mContext)
-                    .load(factDetails.getImageUrl())
-                    .fit()
-                    .centerCrop()
-                    .noFade()
+            RequestOptions requestOptions = new RequestOptions()
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.error)
-                    .into(ivFactRep, new Callback() {
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .centerCrop();
+            Glide.with(mContext)
+                    .load(factDetails.getImageUrl())
+                    .apply(requestOptions)
+                    .listener(new RequestListener<Drawable>() {
                         @Override
-                        public void onSuccess() {
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             pbImageLoad.setVisibility(View.GONE);
+                            return false;
                         }
 
                         @Override
-                        public void onError() {
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                             pbImageLoad.setVisibility(View.GONE);
+                            return false;
                         }
-                    });
+                    })
+                    .into(ivFactRep);
         } else {
             pbImageLoad.setVisibility(View.GONE);
         }

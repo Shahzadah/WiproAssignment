@@ -16,6 +16,8 @@ public class FactDetails implements Parcelable {
     @SerializedName("imageHref")
     private String imageUrl;
 
+    public FactDetails() { }
+
     private FactDetails(Parcel in) {
         title = in.readString();
         description = in.readString();

@@ -32,12 +32,17 @@ public class CloudDataSource implements FactDataSource {
 
     @SuppressWarnings({"unchecked", "unused"})
     @Override
-    public void getRandomFacts(boolean cacheObservable, boolean useCache, final ResponseHandler<FactList> responseHandler) {
-        if (!isCacheExist(FactList.class) && !NetworkUtil.isNetworkConnected()) {
-            responseHandler.onInternetNotAvailable();
-            return;
+    public void getRandomFacts(boolean useCache, final ResponseHandler<FactList> responseHandler) {
+
+        //If Network not available and cache doesn't exist, Show Error. Else, use cache as default if exist.
+        if (!NetworkUtil.isNetworkConnected()) {
+            if (!isCacheExist(FactList.class)) {
+                responseHandler.onInternetNotAvailable();
+                return;
+            }
+            useCache = true;
         }
-        Observable<FactList> factListObservable = ((Observable<FactList>) getPreparedObservable(mServiceEndpoint.getRandomFacts(), FactList.class, cacheObservable, useCache));
+        Observable<FactList> factListObservable = ((Observable<FactList>) getPreparedObservable(mServiceEndpoint.getRandomFacts(), FactList.class, true, useCache));
         DisposableObserver observer = factListObservable.subscribeWith(new DisposableObserver<FactList>() {
             @Override
             public void onNext(FactList factList) {

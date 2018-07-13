@@ -15,6 +15,8 @@ public class FactList implements Parcelable {
     @SerializedName("rows")
     private List<FactDetails> listFacts;
 
+    public FactList() {}
+
     private FactList(Parcel in) {
         title = in.readString();
         listFacts = in.createTypedArrayList(FactDetails.CREATOR);
