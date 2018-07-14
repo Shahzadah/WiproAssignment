@@ -28,6 +28,7 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
