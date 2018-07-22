@@ -56,12 +56,5 @@ class FactsListContract {
          */
         void onRefresh();
 
-        /**
-         * On list item click
-         *
-         * @param position - list item position
-         */
-        void onListItemClick(int position);
-
     }
 }

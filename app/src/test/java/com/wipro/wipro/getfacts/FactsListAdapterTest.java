@@ -34,13 +34,11 @@ public class FactsListAdapterTest {
 
     private FactsListAdapter adapter;
     private FactsListItemViewHolder holder;
-    private FactsListContract.Presenter view;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        adapter = FactsListAdapter.create(mContext)
-                .withListener(view);
+        adapter = FactsListAdapter.create(mContext);
         when(mContext.getString(anyInt())).thenReturn("Random facts");
     }
 

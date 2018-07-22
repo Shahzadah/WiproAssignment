@@ -29,7 +29,6 @@
     <style name="Description" parent="TextFontRobotoRegular">
         <item name="android:textColor">@color/item_description</item>
         <item name="android:textSize">@dimen/text_size_details</item>
-        <item name="android:maxLines">4</item>
         <item name="android:ellipsize">end</item>
     </style>
 

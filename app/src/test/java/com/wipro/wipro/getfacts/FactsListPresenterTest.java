@@ -17,7 +17,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -40,9 +39,6 @@ public class FactsListPresenterTest {
 
     private FactsListPresenter mPresenter;
 
-    @Spy
-    private final List<FactDetails> mListFactDetails = new ArrayList<>();
-
     @Mock
     private FactsListContract.View view;
 
@@ -53,18 +49,13 @@ public class FactsListPresenterTest {
     private ArgumentCaptor<ResponseHandler<FactList>> mFactsDataSourceCaptor;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockStatic(NetworkUtil.class);
         mockStatic(CloudDataSource.class);
         when(CloudDataSource.create()).thenReturn(mCloudDataSource);
         mPresenter = new FactsListPresenter();
         mPresenter.onAttach(view);
-        CommonMethodForTest.setFieldValue(mPresenter, "mListFactDetails", mListFactDetails);
-    }
-
-    @Test
-    public void getListRandomFacts() {
     }
 
     @Test
@@ -88,7 +79,7 @@ public class FactsListPresenterTest {
     }
 
     @Test
-    public void loadRandomFactsSuccess() {
+    public void loadRandomFactsSuccessWithAllNullData() {
         when(NetworkUtil.isNetworkConnected()).thenReturn(true);
         mPresenter.loadRandomFacts();
         verify(view).setLoadingIndicator(true);
@@ -101,20 +92,30 @@ public class FactsListPresenterTest {
         when(factList.getListFacts()).thenReturn(factDetailsList);
         mFactsDataSourceCaptor.getValue().onRequestSuccess(factList);
 
-        assertEquals(mListFactDetails.size(), factDetailsList.size());
+        assertEquals(mPresenter.getListRandomFacts().size(), 0);
         verify(view).setLoadingIndicator(false);
         verify(view).notifyAdapter();
     }
 
     @Test
-    public void onRefresh() {
-    }
+    public void loadRandomFactsSuccessWithValidData() {
+        when(NetworkUtil.isNetworkConnected()).thenReturn(true);
+        mPresenter.loadRandomFacts();
+        verify(view).setLoadingIndicator(true);
+        verify(mCloudDataSource).getRandomFacts(eq(true), mFactsDataSourceCaptor.capture());
 
-    @Test
-    public void onListItemClick() {
+        List<FactDetails> factDetailsList = new ArrayList<>();
         FactDetails factDetails = mock(FactDetails.class);
-        mListFactDetails.add(factDetails);
-        mPresenter.onListItemClick(0);
-        verify(view).onFactItemSelected(factDetails);
+        when(factDetails.getTitle()).thenReturn("title");
+        when(factDetails.getDescription()).thenReturn("description");
+
+        factDetailsList.add(factDetails);
+        FactList factList = mock(FactList.class);
+        when(factList.getListFacts()).thenReturn(factDetailsList);
+        mFactsDataSourceCaptor.getValue().onRequestSuccess(factList);
+
+        assertEquals(mPresenter.getListRandomFacts().size(), factDetailsList.size());
+        verify(view).setLoadingIndicator(false);
+        verify(view).notifyAdapter();
     }
 }

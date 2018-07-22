@@ -11,7 +11,6 @@ import com.wipro.wipro.R;
 import com.wipro.wipro.Utils.AlertManager;
 import com.wipro.wipro.data.FactDetails;
 import com.wipro.wipro.framework.base.MVPView;
-import com.wipro.wipro.widgets.SimpleDividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,10 +38,9 @@ public class FactsListActivity extends AppCompatActivity implements FactsListCon
         mPresenter.onAttach((MVPView) this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         mAdapter = FactsListAdapter.create(this)
                 .withData(mPresenter.getListRandomFacts())
-                .withListener(mPresenter);
+                .withListener(this);
         recyclerView.setAdapter(mAdapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);

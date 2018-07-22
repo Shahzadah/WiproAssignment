@@ -58,11 +58,6 @@ public class FactsListPresenter implements FactsListContract.Presenter {
         callFactsRetrievalAPI(false);
     }
 
-    @Override
-    public void onListItemClick(int position) {
-        mFactsView.onFactItemSelected(mListFactDetails.get(position));
-    }
-
     /**
      * Call API to get list of random facts.
      */

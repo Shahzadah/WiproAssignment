@@ -17,7 +17,7 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListItemViewHold
 
     private final Context mContext;
     private List<FactDetails> mListFactDetails;
-    private FactsListContract.Presenter mListener;
+    private FactsListContract.View mListener;
 
     private FactsListAdapter(Context context) {
         this.mContext = context;
@@ -49,7 +49,7 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListItemViewHold
      * @param listener : Callback listener to communicate with presenter
      * @return : Return the adapter reference
      */
-    public FactsListAdapter withListener(FactsListContract.Presenter listener) {
+    public FactsListAdapter withListener(FactsListContract.View listener) {
         this.mListener = listener;
         return this;
     }
@@ -68,7 +68,7 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListItemViewHold
         }
         FactDetails factDetails = mListFactDetails.get(position);
         holder.setValues(factDetails);
-        holder.setClickListener((v, itemPosition) -> mListener.onListItemClick(itemPosition));
+        holder.setClickListener((v, itemPosition) -> mListener.onFactItemSelected(factDetails));
     }
 
     @Override
