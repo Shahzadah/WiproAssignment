@@ -5,20 +5,20 @@
     android:orientation="vertical"
     android:padding="@dimen/padding_14dp">
 
-    <com.wipro.wipro.widgets.CustomTextView
+    <com.demo.facts.widgets.CustomTextView
         android:id="@+id/errorHeaderTextView"
         style="@style/HeaderTextAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.wipro.wipro.widgets.CustomTextView
+    <com.demo.facts.widgets.CustomTextView
         android:id="@+id/errorMessageTextView"
         style="@style/DescriptionTextAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_10dp" />
 
-    <com.wipro.wipro.widgets.CustomTextView
+    <com.demo.facts.widgets.CustomTextView
         android:id="@+id/button_okay"
         style="@style/ButtonTextAlertBold"
         android:layout_width="wrap_content"

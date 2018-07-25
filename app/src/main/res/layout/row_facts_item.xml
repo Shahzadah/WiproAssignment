@@ -14,14 +14,14 @@
         android:background="@drawable/fact_list_item_bg"
         android:padding="@dimen/padding_10dp">
 
-        <com.wipro.wipro.widgets.CustomTextView
+        <com.demo.facts.widgets.CustomTextView
             android:id="@+id/textview_title"
             style="@style/Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name" />
 
-        <com.wipro.wipro.widgets.CustomTextView
+        <com.demo.facts.widgets.CustomTextView
             android:id="@+id/textview_desc"
             style="@style/Description"
             android:layout_width="match_parent"

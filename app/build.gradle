@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.wipro.wipro"
+        applicationId "com.demo.facts"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
